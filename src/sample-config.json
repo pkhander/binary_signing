@@ -1,0 +1,26 @@
+{
+  "oci_registry_repo": "your-registry-repo",
+  "quay_username": "your-quay-username",
+  "quay_password": "your-quay-password",
+  "ssh_config": {
+    "mac": {
+      "host": "macos-signing.tpb.lab.eng.brq.redhat.com",
+      "user": "macos-signing",
+      "password": "mac-vm-password",
+      "keychain_password": "keychain",
+      "signing_identity": "signing-identity",
+      "notarization_username": "notarization-username",
+      "notarization_password": "notarization-password"
+    },
+    "win": {
+      "host": "win-host",
+      "user": "win-user",
+      "password": "win-password"
+    },
+    "gpg": {
+      "host": "gpg-host",
+      "user": "gpg-user",
+      "password": "gpg-password"
+    }
+  }
+}
