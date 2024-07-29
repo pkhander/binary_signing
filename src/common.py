@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-def pull_binaries(ssh, registry, digest, username, password, target_dir='/Users/macos-signing/pk-testing/unsigned/'):
+def pull_content_using_oras(ssh, registry, digest, username, password, target_dir='/Users/macos-signing/pk-testing/unsigned/'):
     """Pull binaries using oras with authentication"""
     env_vars = f"export ORAS_USERNAME='{username}' && export ORAS_PASSWORD='{password}'"
     cd_command = f"mkdir -p {target_dir} && cd {target_dir} && "
@@ -9,7 +9,7 @@ def pull_binaries(ssh, registry, digest, username, password, target_dir='/Users/
     ssh.run_command(cd_command, sensitive=True)
     return ssh.run_command(pull_command)
 
-def push_signed_binaries(ssh, registry, signed_dir):
+def push_content_using_oras(ssh, registry, signed_dir):
     """Push signed binaries to OCI registry"""
     command = f"oras push {registry} {signed_dir}/*.app"
     output, _ = ssh.run_command(command)

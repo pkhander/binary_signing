@@ -21,7 +21,7 @@ import json
 import logging
 import sys
 from ssh_client import SSHClient
-from common import pull_binaries, push_signed_binaries
+from common import pull_content_using_oras, push_content_using_oras
 from mac_signing import mac_signing, MAC_REQUIRED_FIELDS
 from win_signing import win_signing, WIN_REQUIRED_FIELDS
 from gpg_signing import gpg_signing, GPG_REQUIRED_FIELDS
@@ -86,7 +86,7 @@ def main():
     try:
         with SSHClient(ssh_config['host'], ssh_config['user'], ssh_config['password']) as ssh:
             logger.info("Pulling unsigned binaries...")
-            pull_binaries(ssh, config['oci_registry_repo'], config['unsigned_digest'], config['quay_username'], config['quay_password'])
+            pull_content_using_oras(ssh, config['oci_registry_repo'], config['unsigned_digest'], config['quay_username'], config['quay_password'])
 
             if args.signing_type == 'mac':
                 mac_signing(ssh, config)
@@ -96,7 +96,7 @@ def main():
                 gpg_signing(ssh, config)
             
             logger.info("Pushing signed binaries...")
-            digest = push_signed_binaries(ssh, config['oci_registry_repo'], '~/signed')
+            digest = push_content_using_oras(ssh, config['oci_registry_repo'], '~/signed')
             
             logger.info(f"Signing process completed. Digest: {digest}")
     except Exception as e:
